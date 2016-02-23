@@ -1,0 +1,10 @@
+frontend:
+  build: frontend/.
+  ports:
+   - "8000:8000"
+  links:
+   - backend
+backend:
+  build: backend/.
+  ports:
+   - "8000:8000"
