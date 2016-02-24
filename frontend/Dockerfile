@@ -29,5 +29,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir /root/rumal/logs/
 RUN python manage.py migrate
 EXPOSE 8000
-RUN python manage.py createsuperuser --username=rumal --email=rumal@honeynet.org
+RUN python manage.py createsuperuser --username=root --email="rumal@example.com" --noinput
 CMD python manage.py runserver 0.0.0.0:8000
