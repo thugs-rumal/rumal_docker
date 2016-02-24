@@ -23,5 +23,5 @@ RUN pip install --upgrade pip ndg-httpsclient
 RUN pip install -r requirements.txt
 RUN python manage.py migrate
 EXPOSE 8000
-RUN python manage.py createsuperuser --username=root --email="rumal@example.com" --noinput
+RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
 CMD python manage.py runserver 0.0.0.0:8000
