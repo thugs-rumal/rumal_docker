@@ -1,7 +1,6 @@
-# This is a Dockerfile for creating a Thug https://github.com/buffer/thug Container from the latest
-# Ubuntu base image. This is known bo be working on Ubuntu 14.04. It should work on any later version
-# This is a full installation of Thug including all optional packages used for distributed operation
-# Excluding Androguard
+# This Dockerfile is for creating a fully functional Rumal frontend
+# with a default user with admin:admin credentials.
+# Please ONLY USE THIS FOR TESTING.
 FROM ubuntu:15.10
 MAINTAINER ali@ikinci.info
 ENV LC_ALL C
@@ -15,19 +14,23 @@ RUN apt-get -y install --no-install-recommends \
     git \
     libffi-dev \
     libssl-dev \
+    mongodb \
     python-dev \
     python-magic \
     python-ndg-httpsclient \
     python-openssl \
-    python-pyasn1
-RUN curl https://bootstrap.pypa.io/get-pip.py |python
+    python-pyasn1 \
+    sed \
+    sqlite3
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
+WORKDIR /opt/
 RUN git clone https://github.com/thugs-rumal/rumal.git
-WORKDIR /root/rumal/
+WORKDIR /opt/rumal/
+ADD start.sh /opt/rumal/
 RUN pip install --no-cache-dir --upgrade pip
-RUN apt-get -y install --no-install-recommends sed
 RUN pip install --no-cache-dir -r requirements.txt
-RUN mkdir /root/rumal/logs/
+RUN mkdir /opt/rumal/logs/
 RUN python manage.py migrate
 EXPOSE 8000
 RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
-CMD python manage.py runserver 0.0.0.0:8000
+CMD ["/opt/rumal/start.sh"]

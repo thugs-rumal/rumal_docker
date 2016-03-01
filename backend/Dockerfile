@@ -1,8 +1,7 @@
-# This is a Dockerfile for creating a Thug https://github.com/buffer/thug Container from the latest
-# Ubuntu base image. This is known bo be working on Ubuntu 14.04. It should work on any later version
-# This is a full installation of Thug including all optional packages used for distributed operation
-# Excluding Androguard
-FROM honeynet/thug:latest
+# This Dockerfile is for creating a fully functional Rumal backend
+# with a default user with admin:admin credentials.
+# Please ONLY USE THIS FOR TESTING.
+FROM ubuntu:15.10
 MAINTAINER ali@ikinci.info
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
@@ -10,18 +9,27 @@ WORKDIR  /root/
 RUN  apt-get update && apt-get -y dist-upgrade
 RUN apt-get -y install --no-install-recommends \
     build-essential \
+    ca-certificates \
+    curl \
     git \
     libffi-dev \
     libssl-dev \
     mongodb \
-    python-dev
-# enable mongodb
-RUN sed -i '/^[[:blank:]]*\[mongodb\]$/{n;s/False/True/g;}' /opt/thug/src/Logging/logging.conf
+    python-dev \
+    python-magic \
+    python-ndg-httpsclient \
+    python-openssl \
+    python-pyasn1 \
+    sed \
+    sqlite3
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
+WORKDIR /opt/
 RUN git clone https://github.com/thugs-rumal/rumal_back.git
-WORKDIR /root/rumal_back/
-RUN pip install --upgrade pip ndg-httpsclient
-RUN pip install -r requirements.txt
+WORKDIR /opt/rumal_back/
+ADD start.sh /opt/rumal_back/
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 RUN python manage.py migrate
 EXPOSE 8000
-RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
-CMD python manage.py runserver 0.0.0.0:8000
+RUN echo "from django.contrib.auth.models import User; from tastypie.models import ApiKey; User.objects.create_superuser('admin', 'admin@example.com', 'admin'); key, created = ApiKey.objects.get_or_create(user=User.objects.get(username='admin')); key.key = '4823ef79b9fa1bc0b119e20602dd34b1'; key.save()" | python manage.py shell
+CMD ["/opt/rumal_back/start.sh"]
