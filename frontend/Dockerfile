@@ -29,7 +29,7 @@ WORKDIR /opt/rumal/
 ADD start.sh /opt/rumal/
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-RUN mkdir /opt/rumal/logs/
+RUN mkdir -p /opt/rumal/logs/
 RUN python manage.py migrate
 EXPOSE 8000
 RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
