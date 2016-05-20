@@ -5,7 +5,7 @@ FROM ubuntu:15.10
 MAINTAINER ali@ikinci.info
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
-WORKDIR  /root/
+WORKDIR  /root
 RUN  apt-get update && apt-get -y dist-upgrade
 RUN apt-get -y install --no-install-recommends \
     build-essential \
@@ -23,14 +23,14 @@ RUN apt-get -y install --no-install-recommends \
     sed \
     sqlite3
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
-WORKDIR /opt/
+WORKDIR /opt
 RUN git clone https://github.com/thugs-rumal/rumal.git
-WORKDIR /opt/rumal/
-ADD start.sh /opt/rumal/
+WORKDIR rumal
+ADD start.sh .
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir -p /opt/rumal/logs/
 RUN python manage.py migrate
-EXPOSE 8000
+EXPOSE 8080
 RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
-CMD ["/opt/rumal/start.sh"]
+CMD ["/bin/bash", "/opt/rumal/start.sh"]

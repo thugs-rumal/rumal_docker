@@ -30,7 +30,7 @@ echo 'api_key = "4823ef79b9fa1bc0b119e20602dd34b1"' >> /opt/rumal/conf/backend.c
 echo 'api_user = "admin"' >> /opt/rumal/conf/backend.conf
 
 echo "Starting Rumal's HTTP Server..."
-/usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8000 >/var/log/rumal-web.log 2>&1 &
+/usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
 echo $! > /var/run/rumal-http.pid
 
 echo "Starting Rumal's frontend daemon..."
@@ -42,14 +42,14 @@ echo "Starting Rumal's enrich daemon..."
 echo $! > /var/run/rumal-enrich.pid
 
 # Give a hint about how to use
-echo "Running on: http://"$(hostname -i)":8000/"
+echo "Running on: http://"$(hostname -i)":8080/"
 echo "Username: admin"
 
 # Check if processes are still alive
 while true; do
     kill -0 $(cat /var/run/rumal-http.pid) > /dev/null 2>&1
     if [ $? -eq 1 ]; then
-        /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8000 >/var/log/rumal-web.log 2>&1 &
+        /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
         echo $! > /var/run/rumal-http.pid
     fi
     kill -0 $(cat /var/run/rumal-fdaemon.pid)
