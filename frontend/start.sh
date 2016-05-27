@@ -25,9 +25,12 @@ exec 2>&1
 
 # Create the needed configuration files
 echo "[backend]" > /opt/rumal/conf/backend.conf
-echo 'host = "http://backend:8000"' >> /opt/rumal/conf/backend.conf
-echo 'api_key = "4823ef79b9fa1bc0b119e20602dd34b1"' >> /opt/rumal/conf/backend.conf
-echo 'api_user = "admin"' >> /opt/rumal/conf/backend.conf
+echo 'host = http://192.168.99.100:8000/' >> /opt/rumal/conf/backend.conf
+echo 'api_key = 4823ef79b9fa1bc0b119e20602dd34b1' >> /opt/rumal/conf/backend.conf
+echo 'api_user = admin' >> /opt/rumal/conf/backend.conf
+
+#[ -f /usr/bin/sudo ] && echo "Found" || echo "Not found"
+/usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 
 echo "Starting Rumal's HTTP Server..."
 /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
@@ -42,12 +45,12 @@ echo "Starting Rumal's enrich daemon..."
 echo $! > /var/run/rumal-enrich.pid
 
 # Give a hint about how to use
-echo "Running on: http://"$(hostname -i)":8080/"
+echo "Running on: http://hostDockerIP:8080/"
 echo "Username: admin"
 
 # Check if processes are still alive
 while true; do
-    kill -0 $(cat /var/run/rumal-http.pid) > /dev/null 2>&1
+    kill -0 $(cat /var/run/rumal-http.pid) > /dev/null 
     if [ $? -eq 1 ]; then
         /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
         echo $! > /var/run/rumal-http.pid
