@@ -11,7 +11,7 @@ System-wide requirements
     
 **Docker:**
 
-You will need docker to be able to build dockefiles, follow the insructions on [this link](https://docs.docker.com/engine/installation/) on your respective system. You will need to be able to run commands like ```docker-compose```.
+You will need docker to be able to build dockefiles, follow the instructions on [this link](https://docs.docker.com/engine/installation/) on your respective system. You will need to be able to run commands like ```docker-compose```.
 
 
 **Cloning and building Dockerfile**
@@ -39,7 +39,7 @@ Backend is running in a container named ```back```. If you are on Windows or Mac
 ```sh
 docker run -d -p 8080:8080 --name front rumaldocker_frontend
 ```
-The container running front end is calld ```front```.
+The container running front end is called ```front```.
 ```-d``` will run the container in detached mode. Removing this will display:
 ```
 Starting Rumal's HTTP Server...
@@ -51,7 +51,7 @@ Username: admin
 
 **Connection**
 
-Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesnt work.
+Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
 
 * Default user: admin
 * Default password: admin  
@@ -68,7 +68,7 @@ $ docker-machine ip
 ```
 OR
 
-The IP address displayed at the top of the Docker Quickstart Terminal
+The IP address displayed at the top of the Docker Quick start Terminal
 
 # Tests
 This has been tested on :
