@@ -51,10 +51,17 @@ Username: admin
 
 **Connection**
 
+****Windows****:
+
 Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
+
+****Ubuntu****
+
+[127.0.0.1:8080](127.0.0.1:8080) should work to access Rumal.  
 
 * Default user: admin
 * Default password: admin  
+
 
 
 
