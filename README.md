@@ -1,5 +1,17 @@
+# rumal_docker
+A docker container with a ready to run rumal instance
 
-You will need docker to be able to build dockefiles, follow the instructions on [this link](https://docs.docker.com/engine/installation/) on your respective system. You will need to be able to run commands like ```docker-compose```.
+
+# Installation 
+
+System-wide requirements
+* Docker 
+* git
+
+    
+**Docker:**
+
+You will need docker to be able to build dockefiles, follow the instructions on [this link](https://docs.docker.com/engine/installation/) on your respective system. You will need to be able to run the command ```docker-compose```.
 
 
 **Cloning and building Dockerfile**
@@ -26,21 +38,21 @@ Api-Key: 4823ef79b9fa1bc0b119e20602dd34b1
 ```
 Your instance of rumal-thug is now ready to use. 
 
-Rumal backend is running on <IP>:8000.
+Rumal backend is running on <IP>:8000.  
 Rumal front end will be running on <IP>:8080.
 
-**Connection**
+# Connection
 
 * **Windows:**
 
-Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
+    Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
 
 * **Ubuntu:**
 
-[127.0.0.1:8080](127.0.0.1:8080) should work to access Rumal.  
+    [127.0.0.1:8080](127.0.0.1:8080) should work to access Rumal.  
 
-* **Login:**
-    Default user: admin
+* **Login:**    
+    Default user: admin  
     Default password: admin  
 
 
@@ -61,4 +73,7 @@ The IP address displayed at the top of the Docker Quick start Terminal
 # Tests
 This has been tested on :
 -  Windows 10 / Docker version 1.11.0
+
+
+
 
