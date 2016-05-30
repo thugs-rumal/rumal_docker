@@ -25,7 +25,7 @@ exec 2>&1
 
 # Create the needed configuration files
 echo "[backend]" > /opt/rumal/conf/backend.conf
-echo 'host = http://192.168.99.100:8000/' >> /opt/rumal/conf/backend.conf
+echo 'host = http://backend:8000/' >> /opt/rumal/conf/backend.conf
 echo 'api_key = 4823ef79b9fa1bc0b119e20602dd34b1' >> /opt/rumal/conf/backend.conf
 echo 'api_user = admin' >> /opt/rumal/conf/backend.conf
 

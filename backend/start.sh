@@ -30,7 +30,7 @@ usermod -aG docker root
 /etc/init.d/docker start 
 
 # Mongodb listening on interfaces
-sed -i 's/^  bindIp: 127.0.0.1/  bindIp: 0.0.0.0,172.18.0.1,192.168.99.100,172.17.0.2/' /etc/mongod.conf
+sed -i 's/^  bindIp: 127.0.0.1/  bindIp: 0.0.0.0/' /etc/mongod.conf
 
 
 #Mongo db in background
