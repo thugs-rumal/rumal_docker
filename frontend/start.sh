@@ -45,7 +45,7 @@ echo "Starting Rumal's enrich daemon..."
 echo $! > /var/run/rumal-enrich.pid
 
 # Give a hint about how to use
-echo "Running on: http://hostDockerIP:8080/"
+echo "Running on: http://"$(hostname -i)":8080/"
 echo "Username: admin"
 
 # Check if processes are still alive

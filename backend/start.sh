@@ -26,7 +26,7 @@ exec 2>&1
 
  
 #add docker to root group + start docker
-usermod -aG docker root
+#usermod -aG docker root
 /etc/init.d/docker start 
 
 # Mongodb listening on interfaces
@@ -49,7 +49,7 @@ echo "Starting Rumal's backend HTTP Server..."
 echo $! > /var/run/rumal_back-http.pid
 
 # Give a hint about how to use
-echo "Running on: http://hostDockerIP:8000/"
+echo "Running on: http://"$(hostname -i)":8000/"
 echo "Username: admin"
 echo "Api-Key: "$(sqlite3 db.sqlite3 'SELECT `key` FROM tastypie_apikey WHERE user_id = (SELECT id FROM auth_user WHERE username = '"'"'admin'"'"');')
 

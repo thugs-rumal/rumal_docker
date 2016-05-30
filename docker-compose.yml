@@ -5,6 +5,7 @@ frontend:
   links:
    - backend
 backend:
+  privileged: true
   build: backend/
   ports:
    - "8000:8000"

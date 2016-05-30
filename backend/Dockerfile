@@ -48,9 +48,6 @@ RUN  apt-get update && apt-get -y dist-upgrade
 RUN  apt-get -y install docker-engine
 	
 
-
-
-# RUN curl -sSL https://get.docker.com/ | sh
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 WORKDIR /opt
 RUN git clone https://github.com/Dennisparchkov/rumal_back.git
