@@ -60,6 +60,7 @@ The IP address displayed at the top of the Docker Quick start Terminal
 # Tests
 This has been tested on :  
 -  Windows 10 / Docker version 1.11.0
+-  Ubuntu 16.04 Desktop / Docker version 1.11.0
 
 
 
