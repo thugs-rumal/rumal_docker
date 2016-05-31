@@ -37,9 +37,6 @@ sed -i 's/^  bindIp: 127.0.0.1/  bindIp: 0.0.0.0/' /etc/mongod.conf
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 
 
-#Pull thug
-docker pull pdelsante/thug-dockerfile
-
 echo "Starting Rumal's backend worker daemon..." 
 /usr/bin/python /opt/rumal_back/manage.py run_thug >/var/log/rumal_back-run_thug.log 2>&1 &
 echo $! > /var/run/rumal_back-run_thug.pid

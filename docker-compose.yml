@@ -3,7 +3,7 @@ frontend:
   ports:
    - "8080:8080"
   links:
-   - backend
+   - backend 
 backend:
   privileged: true
   build: backend/

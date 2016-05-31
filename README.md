@@ -27,47 +27,34 @@ The following command will create ```rumaldocker_backend_1``` and ```rumaldocker
 ```sh
 $ docker-compose up 
 ```
-
-This will start pulling ```thug-docker```, it may take a while. Once its finished you will see:
-```
-Starting Rumal's backend worker daemon...
-Starting Rumal's backend HTTP Server...
-Running on: http://<IP>:8000/
-Username: admin
-Api-Key: 4823ef79b9fa1bc0b119e20602dd34b1
-```
 Your instance of rumal-thug is now ready to use. 
 
-Rumal backend is running on <IP>:8000.  
+Rumal backend is running on <IP>:8000/admin.  
 Rumal front end will be running on <IP>:8080.
 
 # Connection
 
-* **Windows:**
-
+* **Windows:**  
     Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
 
-* **Ubuntu:**
-
+* **Ubuntu:**  
     [127.0.0.1:8080](127.0.0.1:8080) should work to access Rumal.  
 
 * **Login:**    
-    Default user: admin  
-    Default password: admin  
+    *Default user*: admin  
+    *Default password*: admin  
 
 
 
 
 **Find default IP address:**
 
-Docker is configured to use the default machine with IP <192.168.99.100>(This is the IP address you use to connect to server)
-
+Docker is configured to use the default machine with IP <192.168.99.100>(This is the IP address you use to connect to server).  
 IP address can be found by running this on your host machine: 
 ```sh
 $ docker-machine ip
-```
-OR
-
+```  
+OR  
 The IP address displayed at the top of the Docker Quick start Terminal
 
 # Tests
