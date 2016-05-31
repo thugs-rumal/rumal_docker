@@ -29,16 +29,16 @@ $ docker-compose up
 ```
 Your instance of rumal-thug is now ready to use. 
 
-Rumal backend is running on <IP>:8000/admin.  
-Rumal front end will be running on <IP>:8080.
+Rumal backend is running on (IP):8000/admin.  
+Rumal front end will be running on (IP):8080.
 
 # Connection
 
 * **Windows:**  
-    Go to [192.168.99.100:8080](192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
+    Go to [192.168.99.100:8080](http://192.168.99.100:8080) to access Rumal. This IP address might be different for you, see **Find default IP address** if it doesn’t work.
 
 * **Ubuntu:**  
-    [127.0.0.1:8080](127.0.0.1:8080) should work to access Rumal.  
+    [127.0.0.1:8080](http://127.0.0.1:8080) should work to access Rumal.  
 
 * **Login:**    
     *Default user*: admin  
@@ -58,7 +58,7 @@ OR
 The IP address displayed at the top of the Docker Quick start Terminal
 
 # Tests
-This has been tested on :
+This has been tested on :  
 -  Windows 10 / Docker version 1.11.0
 
 
