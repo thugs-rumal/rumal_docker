@@ -50,7 +50,7 @@ RUN  apt-get -y install docker-engine
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 WORKDIR /opt
-RUN git clone https://github.com/Dennisparchkov/rumal_back.git
+RUN git clone https://github.com/thugs-rumal/rumal_back.git
 WORKDIR rumal_back
 ADD start.sh .
 RUN pip install --no-cache-dir --upgrade pip

@@ -16,7 +16,7 @@ You will need docker to be able to build dockefiles, follow the instructions on 
 
 **Cloning and building Dockerfile**
 ```sh
-$ git clone https://github.com/Dennisparchkov/rumal_docker.git
+$ git clone  https://github.com/thugs-rumal/rumal_docker.git
 $ cd rumal_docker
 $ docker-compose build 
 ```
