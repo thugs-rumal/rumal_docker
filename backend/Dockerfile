@@ -29,14 +29,13 @@ RUN apt-get -y install --no-install-recommends \
     python-pyasn1 \
     sed \
     sqlite3 \ 
-	apt-transport-https \
-	ca-certificates \
-    curl \
+    apt-transport-https \
+    ca-certificates \
     lxc \
     iptables \ 
-	net-tools \ 
-	sudo \
-	expect-dev
+    net-tools \ 
+    sudo \
+    expect-dev
 	
 VOLUME ["/data/db"]
 	
