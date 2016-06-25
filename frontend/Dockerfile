@@ -11,7 +11,12 @@ WORKDIR  /root
 RUN \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
   echo 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse' > /etc/apt/sources.list.d/mongodb.list
-  
+
+#RabbitMQ
+RUN \
+  apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 0A9AF2115F4687BD29803A206B73A36E6026DFCA && \
+  echo 'deb http://www.rabbitmq.com/debian/ testing main' >> /etc/apt/sources.list.d/rabbitmq.list
+
 
 RUN  apt-get update && apt-get -y dist-upgrade
 RUN apt-get -y install --no-install-recommends \
@@ -27,13 +32,15 @@ RUN apt-get -y install --no-install-recommends \
     python-openssl \
     python-pyasn1 \
     sed \
-    sqlite3
-	
+    sqlite3 \
+    rabbitmq-server
+
+RUN echo '[{rabbit, [{loopback_users, []}]}].' > /etc/rabbitmq/rabbitmq.config
 VOLUME ["/data/db"]	
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 WORKDIR /opt
-RUN git clone https://github.com/thugs-rumal/rumal.git
+RUN git clone https://github.com/Dennisparchkov/rumal.git
 WORKDIR rumal
 ADD start.sh .
 RUN pip install --no-cache-dir --upgrade pip
@@ -42,5 +49,6 @@ RUN mkdir -p /opt/rumal/logs/
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 EXPOSE 8080
+EXPOSE 5672
 RUN echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin')" | python manage.py shell
 CMD ["/bin/bash", "/opt/rumal/start.sh"]

@@ -11,7 +11,11 @@ WORKDIR  /root
 RUN \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
   echo 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse' > /etc/apt/sources.list.d/mongodb.list
-  
+
+#RabbitMQ
+RUN \
+  apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 0A9AF2115F4687BD29803A206B73A36E6026DFCA && \
+  echo 'deb http://www.rabbitmq.com/debian/ testing main' >> /etc/apt/sources.list.d/rabbitmq.list
 
 
 RUN  apt-get update && apt-get -y dist-upgrade
@@ -35,8 +39,11 @@ RUN apt-get -y install --no-install-recommends \
     iptables \ 
     net-tools \ 
     sudo \
-    expect-dev
-	
+    expect-dev \
+    rabbitmq-server
+
+RUN echo '[{rabbit, [{loopback_users, []}]}].' > /etc/rabbitmq/rabbitmq.config
+
 VOLUME ["/data/db"]
 	
 # Install Docker from Docker Inc. repositories.
@@ -49,7 +56,7 @@ RUN  apt-get -y install docker-engine
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 WORKDIR /opt
-RUN git clone https://github.com/thugs-rumal/rumal_back.git
+RUN git clone https://github.com/Dennisparchkov/rumal_back.git
 WORKDIR rumal_back
 ADD start.sh .
 RUN pip install --no-cache-dir --upgrade pip
@@ -59,6 +66,7 @@ RUN python manage.py migrate
 EXPOSE 8000
 EXPOSE 27017
 EXPOSE 28017
+EXPOSE 5672
 RUN echo "from django.contrib.auth.models import User; from tastypie.models import ApiKey; User.objects.create_superuser('admin', 'admin@example.com', 'admin'); key, created = ApiKey.objects.get_or_create(user=User.objects.get(username='admin')); key.key = '4823ef79b9fa1bc0b119e20602dd34b1'; key.save()" | python manage.py shell
 
 CMD ["/bin/bash", "/opt/rumal_back/start.sh"]

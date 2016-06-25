@@ -27,15 +27,22 @@ exec 2>&1
  
 #add docker to root group + start docker
 #usermod -aG docker root
-/etc/init.d/docker start 
+docker daemon > /var/log/docker-daemon.log 2>&1 &
 
 # Mongodb listening on interfaces
 sed -i 's/^  bindIp: 127.0.0.1/  bindIp: 0.0.0.0/' /etc/mongod.conf
 
 
+# pull thug
+echo "Pulling Thug ... this may take a while..."
+docker pull pdelsante/thug-dockerfile
+
 #Mongo db in background
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 
+# Start RabbitMQ server
+/usr/sbin/rabbitmq-server > /var/log/rabbit-server.log 2>&1 &
+echo $! > /var/run/rabbit.pid
 
 echo "Starting Rumal's backend worker daemon..." 
 /usr/bin/python /opt/rumal_back/manage.py run_thug >/var/log/rumal_back-run_thug.log 2>&1 &
@@ -44,6 +51,11 @@ echo $! > /var/run/rumal_back-run_thug.pid
 echo "Starting Rumal's backend HTTP Server..."
 /usr/bin/python /opt/rumal_back/manage.py runserver 0.0.0.0:8000 >/var/log/rumal_back-web.log 2>&1 &
 echo $! > /var/run/rumal_back-http.pid
+
+echo "Starting Rabbit backend server..."
+rabbitmqctl wait /var/run/rabbit.pid
+/usr/bin/sudo /usr/bin/python /opt/rumal_back/manage.py consumer >/var/log/rumal_back-consumer.log 2>&1 &
+echo $! > /var/run/rumal_back-consumer.pid
 
 # Give a hint about how to use
 echo "Running on: http://"$(hostname -i)":8000/"
@@ -62,6 +74,11 @@ while true; do
     if [ $? -eq 1 ]; then
         /usr/bin/python /opt/rumal_back/manage.py run_thug >/var/log/rumal_back-run_thug.log 2>&1 &
 		echo $! > /var/run/rumal_back-run_thug.pid
+    fi
+    kill -0 $(cat /var/run/rumal_back-consumer.pid) > /dev/null
+    if [ $? -eq 1 ]; then
+        /usr/bin/python /opt/rumal_back/manage.py consumer >/var/log/rumal_back-consumer.log 2>&1 &
+		echo $! > /var/run/rumal_back-consumer.pid
     fi
     sleep 60
 done
