@@ -40,7 +40,7 @@ VOLUME ["/data/db"]
 
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 WORKDIR /opt
-RUN git clone https://github.com/Dennisparchkov/rumal.git
+RUN git clone https://github.com/thugs-rumal/rumal.git
 WORKDIR rumal
 ADD start.sh .
 RUN pip install --no-cache-dir --upgrade pip
