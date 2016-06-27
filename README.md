@@ -15,6 +15,9 @@ You will need docker to be able to build dockefiles, follow the instructions on 
 
 
 **Cloning and building Dockerfile**
+
+For windows you will need to run ```git config --global core.autocrlf input``` before pulling the rumal docker git repository so that the files are in the correct file format. 
+
 ```sh
 $ git clone  https://github.com/thugs-rumal/rumal_docker.git
 $ cd rumal_docker
