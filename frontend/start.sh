@@ -26,8 +26,8 @@ exec 2>&1
 # Create the needed configuration files
 echo "[backend]" > /opt/rumal/conf/backend.conf
 echo 'host = backend' >> /opt/rumal/conf/backend.conf
-echo 'api_key = 4823ef79b9fa1bc0b119e20602dd34b1' >> /opt/rumal/conf/backend.conf
-echo 'api_user = admin' >> /opt/rumal/conf/backend.conf
+echo 'rabbit_user = admin' >> /opt/rumal/conf/backend.conf
+echo 'rabbit_password = admin' >> /opt/rumal/conf/backend.conf
 echo 'BE = ' >> /opt/rumal/conf/backend.conf
 
 #[ -f /usr/bin/sudo ] && echo "Found" || echo "Not found"

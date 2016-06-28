@@ -54,6 +54,8 @@ echo $! > /var/run/rumal_back-http.pid
 
 echo "Starting Rabbit backend server..."
 rabbitmqctl wait /var/run/rabbit.pid
+rabbitmqctl add_user admin admin # add admin user
+rabbitmqctl set_permissions -p / admin ".*" ".*" ".*" # give all permissions to admin user
 /usr/bin/sudo /usr/bin/python /opt/rumal_back/manage.py consumer >/var/log/rumal_back-consumer.log 2>&1 &
 echo $! > /var/run/rumal_back-consumer.pid
 
