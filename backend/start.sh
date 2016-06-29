@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 #
-# Author:   Pietro Delsante <p.delsante AT gmail.com>
+# Author:   Pietro Delsante <pietro.delsante AT gmail.com>
 #
 
 # Send all output (stdout + stderr) to a log file
