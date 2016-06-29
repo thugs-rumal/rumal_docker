@@ -23,6 +23,7 @@
 exec > >(tee /var/log/rumal-startup.log)
 exec 2>&1
 
+echo "Creating backend.conf"
 # Create the needed configuration files
 echo "[backend]" > /opt/rumal/conf/backend.conf
 echo 'host = backend' >> /opt/rumal/conf/backend.conf
@@ -30,10 +31,10 @@ echo 'rabbit_user = admin' >> /opt/rumal/conf/backend.conf
 echo 'rabbit_password = admin' >> /opt/rumal/conf/backend.conf
 echo 'BE = ' >> /opt/rumal/conf/backend.conf
 
-#[ -f /usr/bin/sudo ] && echo "Found" || echo "Not found"
+echo "Starting mongod server..."
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 
-# Start RabbitMQ server
+echo "Starting RabbitMQ server..."
 /usr/sbin/rabbitmq-server > /var/log/rabbit-server.log 2>&1 &
 echo $! > /var/run/rabbit.pid
 
@@ -55,20 +56,29 @@ echo "Username: admin"
 
 # Check if processes are still alive
 while true; do
-    kill -0 $(cat /var/run/rumal-http.pid) > /dev/null 
+    echo "Checking if rumal-http is still alive"
+    kill -0 $(cat /var/run/rumal-http.pid) > /dev/null 2>&1
     if [ $? -eq 1 ]; then
+        echo "Process rumal-http is dead, restarting it"
         /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
         echo $! > /var/run/rumal-http.pid
     fi
-    kill -0 $(cat /var/run/rumal-fdaemon.pid)
+
+    echo "Checking if rumal-fdaemon is still alive"
+    kill -0 $(cat /var/run/rumal-fdaemon.pid) > /dev/null 2>&1
     if [ $? -eq 1 ]; then
+        echo "Process rumal-fdaemon is dead, restarting it"
         /usr/bin/python /opt/rumal/manage.py fdaemon >/var/log/rumal-fdaemon.log 2>&1 &
         echo $! > /var/run/rumal-fdaemon.pid
     fi
-    kill -0 $(cat /var/run/rumal-enrich.pid)
+
+    echo "Checking if rumal-enrich is still alive"
+    kill -0 $(cat /var/run/rumal-enrich.pid) > /dev/null 2>&1
     if [ $? -eq 1 ]; then
+        echo "Process rumal-enrich is dead, restarting it"
         /usr/bin/python /opt/rumal/manage.py enrich >/var/log/rumal-enrich.log 2>&1 &
         echo $! > /var/run/rumal-enrich.pid
     fi
+
     sleep 60
 done
