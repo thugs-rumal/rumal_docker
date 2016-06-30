@@ -34,10 +34,6 @@ echo 'BE = ' >> /opt/rumal/conf/backend.conf
 echo "Starting mongod server..."
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 
-echo "Starting RabbitMQ server..."
-/usr/sbin/rabbitmq-server > /var/log/rabbit-server.log 2>&1 &
-echo $! > /var/run/rabbit.pid
-
 echo "Starting Rumal's HTTP Server..."
 /usr/bin/python /opt/rumal/manage.py runserver 0.0.0.0:8080 >/var/log/rumal-web.log 2>&1 &
 echo $! > /var/run/rumal-http.pid
