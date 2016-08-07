@@ -30,6 +30,13 @@ docker daemon > /var/log/docker-daemon.log 2>&1 &
 echo "Making sure that mongodb is listening on all interfaces"
 sed -i 's/^  bindIp: 127.0.0.1/  bindIp: 0.0.0.0/' /etc/mongod.conf
 
+
+while  [  ! -f /var/run/docker.pid ]
+  do
+     echo "Checking for docker pid file"
+     sleep 5
+  done
+
 echo "Pulling Thug ... this may take a while..."
 docker pull pdelsante/thug-dockerfile
 
