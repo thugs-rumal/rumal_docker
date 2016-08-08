@@ -31,6 +31,22 @@ echo 'rabbit_user = admin' >> /opt/rumal/conf/backend.conf
 echo 'rabbit_password = admin' >> /opt/rumal/conf/backend.conf
 echo 'BE = ' >> /opt/rumal/conf/backend.conf
 
+echo "Creating GeoPlugin.conf"
+wget -O /opt/GeoLite2-City.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+gunzip /opt/GeoLite2-City.mmdb.gz
+# Create the needed configuration file for the geo map plugin
+echo "[db_path]" > /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'city = /opt/GeoLite2-City.mmdb' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'anonymous_ip = None' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'connection_type = None' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'isp = None' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo '' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo '[dbs]' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'city = True' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'anonymous_ip = False' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'connection_type = False' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+echo 'isp = False' >> /opt/rumal/conf/plugins/GeoPlugin.conf
+
 echo "Starting mongod server..."
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
 

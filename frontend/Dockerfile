@@ -26,7 +26,8 @@ RUN apt-get -y install --no-install-recommends \
     python-openssl \
     python-pyasn1 \
     sed \
-    sqlite3
+    sqlite3 \
+    wget
 
 VOLUME ["/data/db"]	
 
