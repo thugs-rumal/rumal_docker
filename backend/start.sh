@@ -38,7 +38,7 @@ while  [  ! -f /var/run/docker.pid ]
   done
 
 echo "Pulling Thug ... this may take a while..."
-docker pull pdelsante/thug-dockerfile
+docker pull thugsrumal/thug_docker
 
 echo "Starting mongod server"
 /usr/bin/sudo /usr/bin/mongod --smallfiles --fork --logpath /var/log/mongod.log
